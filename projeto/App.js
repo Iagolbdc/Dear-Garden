@@ -12,6 +12,8 @@ import ShopCart from './src/componentes/ShopCart'
 import Principal from './src/componentes/Principal'
 import AdicionarProduto from './src/componentes/AdicionarProduto'
 import Perfil from './src/componentes/Perfil'
+import Produto from './src/componentes/Produto';
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,6 +53,12 @@ export default function App( ) {
     )
   }
 
+  function ProdutoScreen(){
+    return (
+      <Produto />
+    )
+  }
+
   function RegisterScreen(){
     return(
       <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -81,27 +89,13 @@ export default function App( ) {
     )
   }
 
-  function ProductScreen(){
-    return(
-      <Text>teste</Text>
-    )
-  }
 
-  function AddProduct(){
-    return(
-      <ScrollView>
-        <AdicionarProduto />
-      </ScrollView>
-    )
-  }
-  
-  const Stack = createNativeStackNavigator()
   const Tab = createBottomTabNavigator();
   
   return (
     
     <NavigationContainer>
-       
+
        <Tab.Navigator
        style={{ backgroundColor: '#fff'}}
         screenOptions={({ route }) => ({
@@ -136,6 +130,9 @@ export default function App( ) {
           }
           }} />
         <Tab.Screen name="Cadastro" component={RegisterScreen} 
+        options={{ tabBarButton: () => null }}
+        />
+        <Tab.Screen name="Produto" component={ProdutoScreen} 
         options={{ tabBarButton: () => null }}
         />
       </Tab.Navigator>

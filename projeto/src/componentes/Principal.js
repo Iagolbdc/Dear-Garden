@@ -1,15 +1,34 @@
-import { Image, StyleSheet, Text, View , TextInput, Dimensions, ScrollView, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, View , TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import React, { useState } from 'react';
-import { Link } from '@react-navigation/native';
+import { Link, useLinkTo } from '@react-navigation/native';
 
 
-export default function ShopCart( { funcao } ){
+export default function Principal( { navigation } ){
 
     const [pesquisa, setPesquisa] = useState('')
 
+
+    const [produtos, setProdutos] = useState([
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '1'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '2'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '3'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '4'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '5'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '6'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '7'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '8'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '9'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '10'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '11'},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '12'},
+
+    ])
+
+    const linkTo = useLinkTo()
+
     return(
         <ScrollView contentContainerStyle={styles.container}> 
-
+            
             <View style={styles.navbar}>
                 <Image style={styles.logo} source={require('../../assets/logo.png')}/>
                 <TextInput style={styles.pesquisa} onChangeText={setPesquisa} placeholder='Pesquisar...' />
@@ -20,38 +39,24 @@ export default function ShopCart( { funcao } ){
             
 
             <View style={styles.conteudo}>
-                <TouchableOpacity>
-                    <View style={styles.produto}>
-                        <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
-                        <Text>Renova Be Colágeno Verisol® com Ácido...</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$  169,90</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <View style={styles.produto}>
-                        <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
-                        <Text>Renova Be Colágeno Verisol® com Ácido...</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$  169,90</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <View style={styles.produto}>
-                        <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
-                        <Text>Renova Be Colágeno Verisol® com Ácido...</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$  169,90</Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <View style={styles.produto}>
-                        <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
-                        <Text>Renova Be Colágeno Verisol® com Ácido...</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$  169,90</Text>
-                    </View>
-                </TouchableOpacity>
+                <FlatList 
+                    contentContainerStyle={styles.FlatList}
+                    keyExtractor={(item) => item.key}
+                    data={produtos}
+                    renderItem={({item}) => (
+                            <TouchableOpacity onPress={ () => linkTo( {screen: 'Produto' })}>
+                                <View style={styles.produto}>
+                                    <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
+                                    <Text>{item.nome}</Text>
+                                    <Text style={{fontWeight: 'bold'}}>{item.preco}</Text>
+                                </View>
+                            </TouchableOpacity>  
+                           
+                            )
+                        }
+                />
             </View>
+
 
         </ScrollView>
     )
@@ -94,17 +99,20 @@ const styles = StyleSheet.create({
     conteudo:{
         padding: 30,
         marginTop: 30,
-        flexWrap: 'wrap',
-        gap: 30,
-        flexDirection: 'row',
         justifyContent: 'space-between'
     },
+
+    FlatList:{
+        justifyContent: 'center', 
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        gap: 30
+    },  
 
     produto:{
         height: 220,
         width: 130,
         gap: 10,
-        
     },
 
     imagem:{

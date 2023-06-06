@@ -1,21 +1,19 @@
 import { Image, StyleSheet, Text, View , TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import React, { useState } from 'react';
-import { Link } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
+import { Link, useLinkTo } from '@react-navigation/native';
 
-
-export default function ShopCart( { funcao } ){
+export default function ShopCart(){
 
     const [pesquisa, setPesquisa] = useState('')
 
     const [logado, setLogado] = useState(false)
 
+    const linkTo = useLinkTo()
+
+
     const [produtos, setProdutos] = useState([
-        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: 1},
-        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: 2},
-        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: 3},
-        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: 4},
-        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: 5},
+        {nome: 'Renova Be Colágeno Verisol® com Ácido...', preco: 'R$ 169,90',key: '1'},
     ])
 
     const removerProduto = (key) =>{
@@ -40,8 +38,8 @@ export default function ShopCart( { funcao } ){
                     <FlatList 
                     keyExtractor={(item) => item.key}
                     data={produtos}
-                    renderItem={({item}) => {
-                        <TouchableOpacity>
+                    renderItem={({item}) => (
+                        <TouchableOpacity onPress={() => linkTo({screen: 'Produto'})}>
                         <View style={styles.produto} >
                             <Image style={styles.imagem} source={require('../../assets/produto-colageno.png')} />
                             <View style={styles.descricaoProduto} elevation={2}>    
@@ -54,8 +52,8 @@ export default function ShopCart( { funcao } ){
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </TouchableOpacity>
-                    }}
+                    </TouchableOpacity>)
+                    }
                     />
                     <View style={styles.subtotal}>
                         <Text style={{fontSize: 17, fontWeight: 'bold'}}>Sub-total <Text style={{color: "#157F1F"}}> R$00.00 </Text></Text>
@@ -77,6 +75,7 @@ export default function ShopCart( { funcao } ){
                     <Link to={{ screen: 'Entrar' }} style={styles.link}> Entrar</Link>
                 </Text>
             </View>
+            
             }
             
 

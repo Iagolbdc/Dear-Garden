@@ -2,7 +2,8 @@ import { Image, StyleSheet, Text, View , TextInput, Dimensions, TouchableOpacity
 import React, { useState, useEffect } from 'react';
 import { Link, useLinkTo  } from '@react-navigation/native';
 import Axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function AdicionarUsuario( { funcao } ) {
 
@@ -20,31 +21,26 @@ export default function AdicionarUsuario( { funcao } ) {
 
     const linkTo = useLinkTo()
 
-    const storeData = async (value) => {
+    const saveSession = (value) => async () => {
         try {
-          await AsyncStorage.setItem('@session', value)
-        } catch (e) {
-          // saving error
+        await AsyncStorage.setItem("@session", value);
+        } catch (err) {
+        console.log(err);
         }
-      }
+    }
 
-    const pegarNome  = useEffect(()=>{
+    useEffect(()=>{
         Axios.get("http://172.18.0.1:3001/usuario",{
         params:{
-            name: nomebd,
-            password: senhabd,
+            name: '123123',
         }
         }).then(
           (response)=>{
             setNomebd(response["data"][0]["name"])
-            setSenhabd(response["data"][0]["password"])
-            console.log('noome' + nomebd)
-            console.log('senha' + senhabd)
+            console.log(nomebd)
           })
           
-      }, [nomebd, senhabd])
-
-
+      }, [nomebd])
 
     return (
     <ScrollView>
@@ -87,9 +83,7 @@ export default function AdicionarUsuario( { funcao } ) {
                     setEstadoAlerta(true)
                     return
                 }
-                
-                pegarNome
-                //storeData(nome)
+                //saveSession(nome)
                 //linkTo( {screen: 'Home' })
 
             }}
