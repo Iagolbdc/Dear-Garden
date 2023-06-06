@@ -51,9 +51,8 @@ app.get("/usuarios", (req,res)=>{
 app.get("/usuario/", (req, res)=>{
 
     let name = req.query.name
-    let password = req.query.password
 
-    let SQL = 'SELECT * FROM usuarios WHERE name = '+ name + ' AND password = ' + password
+    let SQL = 'SELECT * FROM usuarios WHERE name = '+ name
 
     db.query(SQL,  (err, result)=>{
         if(err)console.log(err)
